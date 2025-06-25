@@ -1,4 +1,4 @@
-# Copyright (C) 2014 The CyanogenMod Project
+# Copyright (C) 2013 The CyanogenMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,29 +12,40 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Inherit from msm8226-common
--include device/samsung/msm8226-common/BoardConfigCommon.mk
+#
+# This file sets variables that control the way modules are built
+# thorughout the system. It should not be used to conditionally
+# disable makefiles (the proper mechanism to control what gets
+# included in a build is to use PRODUCT_PACKAGES in a product
+# definition file).
+#
 
-SUB_DEVICE_PATH := device/samsung/millet-common
+# inherit from common msm8960
+-include device/samsung/msm8960-common/BoardConfigCommon.mk
 
-# Kernel
+# Kernel 
+TARGET_PREBUILT_KERNEL := device/samsung/millet-common/kernel
+BOARD_CUSTOM_BOOTIMG_MK := device/samsung/millet-common/mkbootimg.mk
+BOARD_KERNEL_CMDLINE := console=null androidboot.console=null androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37
 BOARD_KERNEL_BASE := 0x00000000
-BOARD_KERNEL_CMDLINE := androidboot.hardware=qcom vmalloc=400M user_debug=23 msm_rtb.filter=0x37  androidboot.selinux=permissive
 BOARD_KERNEL_PAGESIZE := 2048
-#BOARD_KERNEL_SEPARATED_DT := true
-#BOARD_CUSTOM_BOOTIMG_MK := $(SUB_DEVICE_PATH)/mkbootimg.mk
-BOARD_MKBOOTIMG_ARGS := --dt kernel/samsung/millet3g/dt.img --kernel_offset 0x00008000 --ramdisk_offset 0x02000000 --tags_offset 0x1e00000
-#TARGET_KERNEL_SOURCE := kernel/samsung/millet3g
-TARGET_NO_KERNEL := true
-TARGET_PREBUILT_KERNEL := kernel/samsung/millet3g/kernel
+BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000 --tags_offset 0x01e00000
 
 # Partitions
-BOARD_BOOTIMAGE_PARTITION_SIZE := 10485760
+TARGET_USERIMAGES_USE_EXT$ := true
+BOARD_BOOTIMAGE_PARTITION_SIZE := 15485760
+BOARD_RECOVERYIMAGE_PARTITION_SIZE := 15485760
+BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2097152000
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 12759776768
 BOARD_CACHEIMAGE_PARTITION_SIZE := 314572800
-BOARD_RECOVERYIMAGE_PARTITION_SIZE := 10485760
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 12843659264
-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2411724800
-TARGET_USERIMAGES_USE_F2FS := true
-BOARD_FLASH_BLOCK_SIZE := 4096
+BOARD_FLASH_BLOCK_SIZE := 131072
 
+# Recovery
+TARGET_RECOVERY_FSTAB := device/samsung/millet-common/rootdir/fstab.qcom
+TARGET_RECOVERY_INITRC := device/samsung/millet-common/rootdir/init.recovery.rc
 
+# Bluetooth
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/millet-common/bluetooth
+
+TARGET_NO_INITLOGO := true
+BOARD_CHARGER_ENABLE_SUSPEND := true
