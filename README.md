@@ -15,7 +15,4 @@ Device Tree For Samsung Galaxy Tab 4
 | Camera  | 8 MP, 3264 x 2448 pixels |
 
 
-This branch is for building CyanogenMod 13.0 Firmware.
-
-TODO:
-=======
+This branch is for building CyanogenMod 12.1 Firmware.
