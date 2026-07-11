@@ -55,3 +55,4 @@ TARGET_KEYMASTER_WAIT_FOR_QSEE := true
 
 # Protobuf-c
 PROTOBUF_SUPPORTED := true
+
